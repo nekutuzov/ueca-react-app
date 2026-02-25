@@ -38,14 +38,20 @@ function useChartListScreen(params?: ChartListScreenParams): ChartListScreenMode
                     { route: { path: "/charts" }, label: "Charts" }
                 ],
                 toolsView: () => (
-                    <Button
-                        contentView="Explain"                        
-                        onClick={() => {
-                            model.crudScreen.screenLayout.drawerPanel.titleView = "Explanation";
-                            model.crudScreen.screenLayout.drawerPanel.contentView = <Markdown source={chartListExplanation} />;
-                            model.crudScreen.screenLayout.drawerPanel.open = true;
-                        }}
-                    />
+                    <Row>
+                        <Button
+                            contentView="Explain"                        
+                            onClick={() => {
+                                model.crudScreen.screenLayout.drawerPanel.titleView = "Explanation";
+                                model.crudScreen.screenLayout.drawerPanel.contentView = <Markdown source={chartListExplanation} />;
+                                model.crudScreen.screenLayout.drawerPanel.open = true;
+                            }}
+                        />
+                        <Button
+                            contentView="Code"
+                            onClick={async () => await model.openNewTab({ path: "https://github.com/nekutuzov/ueca-react-app/blob/master/src/screens/demo/chart/chartListScreen.tsx" })}
+                        />
+                    </Row>
                 ),
                 contentView: () => model.contentView(),
                 onRefresh: () => model.doOnRefresh(),

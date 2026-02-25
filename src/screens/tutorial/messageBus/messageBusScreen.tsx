@@ -6,7 +6,8 @@ import {
     Button,
     Markdown,
     LogViewerModel,
-    useLogViewer
+    useLogViewer,
+    Row
 } from "@components";
 import { ScreenLayoutModel, useScreenLayout } from "@screens";
 import { MessageBusPanelModel, useMessageBusPanel } from "./messageBusPanel";
@@ -40,14 +41,20 @@ function useMessageBusScreen(params?: MessageBusScreenParams): MessageBusScreenM
                     { route: { path: "/messagebus" }, label: "Message Bus Example" },
                 ],
                 toolsView: (
-                    <Button
-                        contentView="Explain"
-                        onClick={() => {
-                            model.screenLayout.drawerPanel.titleView = "Example Explanation";
-                            model.screenLayout.drawerPanel.contentView = <Markdown source={messageBusExplanation} />;
-                            model.screenLayout.drawerPanel.open = true;
-                        }}
-                    />
+                    <Row>
+                        <Button
+                            contentView="Explain"
+                            onClick={() => {
+                                model.screenLayout.drawerPanel.titleView = "Example Explanation";
+                                model.screenLayout.drawerPanel.contentView = <Markdown source={messageBusExplanation} />;
+                                model.screenLayout.drawerPanel.open = true;
+                            }}
+                        />
+                        <Button
+                            contentView="Code"
+                            onClick={async () => await model.openNewTab({ path: "https://github.com/nekutuzov/ueca-react-app/blob/master/src/screens/tutorial/messageBus/messageBusScreen.tsx" })}
+                        />
+                    </Row>
                 ),
                 contentView: () => <model._screenContentView />
             }),

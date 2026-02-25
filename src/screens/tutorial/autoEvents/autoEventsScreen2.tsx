@@ -6,7 +6,8 @@ import {
     Button,
     Markdown,
     LogViewerModel,
-    useLogViewer
+    useLogViewer,
+    Row
 } from "@components";
 import { ScreenLayoutModel, useScreenLayout } from "@screens";
 import { AutoEventsPanel2Model, useAutoEventsPanel2 } from "./autoEventsPanel2";
@@ -40,14 +41,20 @@ function useAutoEventsScreen2(params?: AutoEventsScreen2Params): AutoEventsScree
                     { route: { path: "/autoevents" }, label: "Auto Events Tutorial" },
                 ],
                 toolsView: (
-                    <Button
-                        contentView="Explain"
-                        onClick={() => {
-                            model.screenLayout.drawerPanel.titleView = "Example Explanation";
-                            model.screenLayout.drawerPanel.contentView = <Markdown source={autoEventsExplanation2} />;
-                            model.screenLayout.drawerPanel.open = true;
-                        }}
-                    />
+                    <Row>
+                        <Button
+                            contentView="Explain"
+                            onClick={() => {
+                                model.screenLayout.drawerPanel.titleView = "Example Explanation";
+                                model.screenLayout.drawerPanel.contentView = <Markdown source={autoEventsExplanation2} />;
+                                model.screenLayout.drawerPanel.open = true;
+                            }}
+                        />
+                        <Button
+                            contentView="Code"
+                            onClick={async () => await model.openNewTab({ path: "https://github.com/nekutuzov/ueca-react-app/blob/master/src/screens/tutorial/autoEvents/autoEventsScreen2.tsx" })}
+                        />
+                    </Row>
                 ),
                 contentView: () => <model._screenContentView />
             }),

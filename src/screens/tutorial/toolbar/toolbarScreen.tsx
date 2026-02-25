@@ -6,7 +6,8 @@ import {
     Button,
     Markdown,
     LogViewerModel,
-    useLogViewer
+    useLogViewer,
+    Row
 } from "@components";
 import { ScreenLayoutModel, useScreenLayout } from "@screens";
 import { ToolbarPanelModel, useToolbarPanel } from "./toolbarPanel";
@@ -40,14 +41,20 @@ function useToolbarScreen(params?: ToolbarScreenParams): ToolbarScreenModel {
                     { route: { path: "/toolbar" }, label: "Toolbar Example" },
                 ],
                 toolsView: (
-                    <Button
-                        contentView="Explain"
-                        onClick={() => {
-                            model.screenLayout.drawerPanel.titleView = "Example Explanation";
-                            model.screenLayout.drawerPanel.contentView = <Markdown source={toolbarExplanation} />;
-                            model.screenLayout.drawerPanel.open = true;
-                        }}
-                    />
+                    <Row>
+                        <Button
+                            contentView="Explain"
+                            onClick={() => {
+                                model.screenLayout.drawerPanel.titleView = "Example Explanation";
+                                model.screenLayout.drawerPanel.contentView = <Markdown source={toolbarExplanation} />;
+                                model.screenLayout.drawerPanel.open = true;
+                            }}
+                        />
+                        <Button
+                            contentView="Code"
+                            onClick={async () => await model.openNewTab({ path: "https://github.com/nekutuzov/ueca-react-app/blob/master/src/screens/tutorial/toolbar/toolbarScreen.tsx" })}
+                        />
+                    </Row>
                 ),
                 contentView: () => <model._screenContentView />
             }),

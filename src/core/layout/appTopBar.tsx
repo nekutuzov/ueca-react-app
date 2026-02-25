@@ -3,6 +3,7 @@ import { Typography } from "@mui/material";
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import AdbIcon from '@mui/icons-material/Adb';
 import GitHubIcon from '@mui/icons-material/GitHub';
+import Inventory2Icon from '@mui/icons-material/Inventory2';
 import { Row, AppBarModel, ToolbarModel, UIBaseModel, UIBaseParams, UIBaseStruct, useAppBar, useToolbar, useUIBase, SwitchModel, useSwitch, IconButtonModel, useIconButton } from "@components";
 
 type AppTopBarStruct = UIBaseStruct<{
@@ -11,6 +12,7 @@ type AppTopBarStruct = UIBaseStruct<{
         toolbar: ToolbarModel;
         themeToggle: SwitchModel;
         githubIconButton: IconButtonModel;
+        npmIconButton: IconButtonModel;
         userIconButton: IconButtonModel;
     }
 }>;
@@ -45,6 +47,11 @@ function useAppTopBar(params?: AppBarParams): AppTopBarModel {
                 color: "inherit",
                 onClick: async () => await model.openNewTab({path: "https://github.com/nekutuzov/ueca-react-app.git"})
             }),
+            npmIconButton: useIconButton({
+                iconView: <Inventory2Icon />,
+                color: "inherit",
+                onClick: async () => await model.openNewTab({path: "https://www.npmjs.com/package/ueca-react"})
+            }),
             userIconButton: useIconButton({
                 iconView: <AccountCircle />,
                 color: "inherit",
@@ -77,6 +84,7 @@ function useAppTopBar(params?: AppBarParams): AppTopBarModel {
                 <Row verticalAlign={"center"}>
                     <model.themeToggle.View />
                     <model.githubIconButton.View />
+                    <model.npmIconButton.View />
                     <model.userIconButton.View />
                 </Row>
             </Row>

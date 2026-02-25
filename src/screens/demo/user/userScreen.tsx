@@ -1,7 +1,7 @@
 import * as UECA from "ueca-react";
 import {
     Block,
-    CheckboxModel, Col, RouteScreenBaseModel, RouteScreenBaseParams, RouteScreenBaseStruct, Row, TextFieldModel, useCheckbox, useRouteScreenBase, useTextField
+    CheckboxModel, Col, RouteScreenBaseModel, RouteScreenBaseParams, RouteScreenBaseStruct, Row, TextFieldModel, useCheckbox, useRouteScreenBase, useTextField, Button
 } from "@components";
 import { AppRouteParams } from "@core";
 import { CRUDScreenModel, useCRUDScreen } from "@screens";
@@ -61,6 +61,12 @@ function useUserScreen(params?: UserScreenParams): UserScreenModel {
                         label: model.user?.name || "User"
                     }
                 ],
+                toolsView: () => (
+                    <Button
+                        contentView="Code"
+                        onClick={async () => await model.openNewTab({ path: "https://github.com/nekutuzov/ueca-react-app/blob/master/src/screens/demo/user/userScreen.tsx" })}
+                    />
+                ),
                 contentView: () => model._contentView(),
                 onRefresh: () => model.doOnRefresh(),
                 onValidate: () => model.doOnValidate(),

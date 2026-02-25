@@ -1,7 +1,7 @@
 import * as UECA from "ueca-react";
 import {
     RouteScreenBaseModel, RouteScreenBaseParams, RouteScreenBaseStruct, useRouteScreenBase, CardModel,
-    useCard, Row, PieChartModel, usePieChart, Block
+    useCard, Row, PieChartModel, usePieChart, Block, Button
 } from "@components";
 import { CRUDScreenModel, useCRUDScreen } from "@screens";
 import { User, Chart, ChartDataPoint } from "@api";
@@ -87,6 +87,12 @@ function useDashboardScreen(params?: DashboardScreenParams): DashboardScreenMode
                 breadcrumbs: () => [
                     { route: { path: "/dashboard" }, label: "Dashboard" }
                 ],
+                toolsView: () => (
+                    <Button
+                        contentView="Code"
+                        onClick={async () => await model.openNewTab({ path: "https://github.com/nekutuzov/ueca-react-app/blob/master/src/screens/demo/dashboard/dashboardScreen.tsx" })}
+                    />
+                ),
                 contentView: () => model.contentView(),
                 onRefresh: () => model.doOnRefresh(),
             }),

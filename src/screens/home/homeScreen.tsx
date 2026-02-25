@@ -1,5 +1,5 @@
 import * as UECA from "ueca-react";
-import { Button, Col, Markdown, RouteScreenBaseModel, RouteScreenBaseParams, RouteScreenBaseStruct, useRouteScreenBase } from "@components";
+import { Button, Col, Markdown, RouteScreenBaseModel, RouteScreenBaseParams, RouteScreenBaseStruct, useRouteScreenBase, Row } from "@components";
 import { ScreenLayoutModel, useScreenLayout } from "@screens";
 import uecaAppDiagram from "./ueca_app_diagram.svg";
 import homeExplanationMd from "./homeExplanation.md?raw";
@@ -25,14 +25,20 @@ function useHomeScreen(params?: HomeScreenParams): HomeScreenModel {
                     { route: { path: "/home" }, label: "Home" },
                 ],
                 toolsView: (
-                    <Button
-                        contentView="Explain"
-                        onClick={() => {
-                            model.screenLayout.drawerPanel.titleView = "Architecture Explanation";
-                            model.screenLayout.drawerPanel.contentView = <Markdown source={homeExplanationMd} />;
-                            model.screenLayout.drawerPanel.open = true;
-                        }}
-                    />
+                    <Row>
+                        <Button
+                            contentView="Explain"
+                            onClick={() => {
+                                model.screenLayout.drawerPanel.titleView = "Architecture Explanation";
+                                model.screenLayout.drawerPanel.contentView = <Markdown source={homeExplanationMd} />;
+                                model.screenLayout.drawerPanel.open = true;
+                            }}
+                        />
+                        <Button
+                            contentView="Code"
+                            onClick={async () => await model.openNewTab({ path: "https://github.com/nekutuzov/ueca-react-app/blob/master/src/screens/home/homeScreen.tsx" })}
+                        />
+                    </Row>
                 ),
                 contentView: () => (
                     <Col fill horizontalAlign={"center"} overflow={"auto"}>

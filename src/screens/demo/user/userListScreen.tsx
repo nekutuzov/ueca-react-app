@@ -2,7 +2,7 @@ import * as UECA from "ueca-react";
 import EditIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
 import {
-    ButtonModel, CheckboxModel, Col, NavItem, RouteScreenBaseModel, RouteScreenBaseParams, RouteScreenBaseStruct, Row,
+    Button, ButtonModel, CheckboxModel, Col, NavItem, RouteScreenBaseModel, RouteScreenBaseParams, RouteScreenBaseStruct, Row,
     TableModel, TableRoute, useButton, useCheckbox, useRouteScreenBase, useTable
 } from "@components";
 import { CRUDScreenModel, useCRUDScreen } from "@screens";
@@ -42,6 +42,12 @@ function useUserListScreen(params?: UserListScreenParams): UserListScreenModel {
                 breadcrumbs: () => [
                     { route: { path: "/users" }, label: "Users" }
                 ],
+                toolsView: () => (
+                    <Button
+                        contentView="Code"
+                        onClick={async () => await model.openNewTab({ path: "https://github.com/nekutuzov/ueca-react-app/blob/master/src/screens/demo/user/userListScreen.tsx" })}
+                    />
+                ),
                 contentView: () => model.contentView(),
                 onRefresh: () => model.doOnRefresh(),
             }),

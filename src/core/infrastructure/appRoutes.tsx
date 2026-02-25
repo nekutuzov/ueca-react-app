@@ -19,7 +19,19 @@ const screenRoutes = {
 const otherRoutes = {
     // Add routes without the app layout like documents viewers and external links
     "https://github.com/nekutuzov/ueca-react-app.git": () => null,
-    "https://www.google.com/search?:q": (p: { q?: string }) => p && null,
+    "https://www.npmjs.com/package/ueca-react": () => null,
+    "https://github.com/nekutuzov/ueca-react-app/blob/master/src/screens/home/homeScreen.tsx": () => null,
+    "https://github.com/nekutuzov/ueca-react-app/blob/master/src/screens/demo/dashboard/dashboardScreen.tsx": () => null,
+    "https://github.com/nekutuzov/ueca-react-app/blob/master/src/screens/demo/user/userListScreen.tsx": () => null,
+    "https://github.com/nekutuzov/ueca-react-app/blob/master/src/screens/demo/user/userScreen.tsx": () => null,
+    "https://github.com/nekutuzov/ueca-react-app/blob/master/src/screens/demo/chart/chartListScreen.tsx": () => null,
+    "https://github.com/nekutuzov/ueca-react-app/blob/master/src/screens/demo/chart/chartScreen.tsx": () => null,
+    "https://github.com/nekutuzov/ueca-react-app/blob/master/src/screens/tutorial/toolbar/toolbarScreen.tsx": () => null,
+    "https://github.com/nekutuzov/ueca-react-app/blob/master/src/screens/tutorial/bindings/bindingsScreen.tsx": () => null,
+    "https://github.com/nekutuzov/ueca-react-app/blob/master/src/screens/tutorial/messageBus/messageBusScreen.tsx": () => null,
+    "https://github.com/nekutuzov/ueca-react-app/blob/master/src/screens/tutorial/autoEvents/autoEventsScreen2.tsx": () => null,
+
+    // "https://www.google.com/search?:q": (p: { q?: string }) => p && null,
 }
 
 type OtherRoutes = typeof otherRoutes;

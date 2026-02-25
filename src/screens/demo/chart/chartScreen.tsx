@@ -5,7 +5,7 @@ import {
     ScatterChartModel, useScatterChart, BarChartModel, useBarChart, PieChartSettingsModel, usePieChartSettings,
     LineChartSettingsModel, useLineChartSettings, ScatterChartSettingsModel, useScatterChartSettings,
     BarChartSettingsModel, useBarChartSettings,
-    Block
+    Block, Button
 } from "@components";
 import { AppRouteParams } from "@core";
 import { CRUDScreenModel, useCRUDScreen } from "@screens";
@@ -69,6 +69,12 @@ function useChartScreen(params?: ChartScreenParams): ChartScreenModel {
                         label: model.chart?.title || "Chart"
                     }
                 ],
+                toolsView: () => (
+                    <Button
+                        contentView="Code"
+                        onClick={async () => await model.openNewTab({ path: "https://github.com/nekutuzov/ueca-react-app/blob/master/src/screens/demo/chart/chartScreen.tsx" })}
+                    />
+                ),
                 contentView: () => model._contentView(),
                 onRefresh: () => model.doOnRefresh(),
                 onSave: () => model.doOnSave(),

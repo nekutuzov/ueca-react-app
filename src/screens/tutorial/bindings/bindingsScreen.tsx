@@ -6,7 +6,8 @@ import {
     Button,
     Markdown,
     LogViewerModel,
-    useLogViewer
+    useLogViewer,
+    Row
 } from "@components";
 import { ScreenLayoutModel, useScreenLayout } from "@screens";
 import { BindingsPanelModel, useBindingsPanel } from "./bindingsPanel";
@@ -40,14 +41,20 @@ function useBindingsScreen(params?: BindingsScreenParams): BindingsScreenModel {
                     { route: { path: "/bindings" }, label: "Bindings Example" },
                 ],
                 toolsView: (
-                    <Button
-                        contentView="Explain"
-                        onClick={() => {
-                            model.screenLayout.drawerPanel.titleView = "Example Explanation";
-                            model.screenLayout.drawerPanel.contentView = <Markdown source={bindingsExplanation} />;
-                            model.screenLayout.drawerPanel.open = true;
-                        }}
-                    />
+                    <Row>
+                        <Button
+                            contentView="Explain"
+                            onClick={() => {
+                                model.screenLayout.drawerPanel.titleView = "Example Explanation";
+                                model.screenLayout.drawerPanel.contentView = <Markdown source={bindingsExplanation} />;
+                                model.screenLayout.drawerPanel.open = true;
+                            }}
+                        />
+                        <Button
+                            contentView="Code"
+                            onClick={async () => await model.openNewTab({ path: "https://github.com/nekutuzov/ueca-react-app/blob/master/src/screens/tutorial/bindings/bindingsScreen.tsx" })}
+                        />
+                    </Row>
                 ),
                 contentView: () => <model._screenContentView />
             }),
