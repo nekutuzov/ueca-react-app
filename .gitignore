@@ -1,4 +1,6 @@
-.github/
-.vite/
-node_modules/
+.github
+.vite
+.vscode
+node_modules
+dist
 package-lock.json
