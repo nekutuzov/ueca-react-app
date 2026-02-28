@@ -12,6 +12,7 @@ type DrawerStruct = MuiBaseStruct<{
         actionView: React.ReactNode;
         anchor: "left" | "top" | "right" | "bottom";
         variant: "permanent" | "persistent" | "temporary";
+        width?: number;
     };
 
     events: {
@@ -33,6 +34,7 @@ function useDrawer(params?: DrawerParams): DrawerModel {
             actionView: undefined,
             anchor: "left",
             variant: "temporary",
+            width: undefined,
         },
 
         events: {
@@ -57,7 +59,10 @@ function useDrawer(params?: DrawerParams): DrawerModel {
                 anchor={model.anchor}
                 open={model.open}
                 variant={model.variant}
-                sx={{ zIndex: model.zIndex }}
+                sx={{ 
+                    zIndex: model.zIndex,
+                    ...(model.width ? { '& .MuiDrawer-paper': { width: `${model.width}px` } } : {})
+                }}
                 onClose={_close}
                 {...model.mui}
             >

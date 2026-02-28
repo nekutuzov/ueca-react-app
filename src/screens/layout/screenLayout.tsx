@@ -39,6 +39,7 @@ function useScreenLayout(params?: ScreenParams): ScreenLayoutModel {
             drawerPanel: useAlertDrawer({
                 titleView: "Alert",
                 contentView: "This is an alert drawer.",
+                width: 1000,
             })
         },
 

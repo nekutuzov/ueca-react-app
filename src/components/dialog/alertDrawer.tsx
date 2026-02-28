@@ -9,6 +9,7 @@ type AlertDrawerStruct = UIBaseStruct<{
         customActionView: React.ReactNode;
         open: boolean;
         titleView: React.ReactNode;
+        width?: number;
         buttons: {
             ok?: boolean,
             cancel?: boolean,
@@ -42,6 +43,7 @@ function useAlertDrawer(params?: AlertDrawerParams): AlertDrawerModel {
             customActionView: undefined,
             open: false,
             titleView: undefined,
+            width: undefined,
             closeResult: false,
         },
 
@@ -57,6 +59,7 @@ function useAlertDrawer(params?: AlertDrawerParams): AlertDrawerModel {
                     </Row>
                 ),
                 anchor: () => model.anchor,
+                width: () => model.width,
                 zIndex: () => model.zIndex,
                 open: UECA.bind(() => model, "open"),
                 onOpen: () => {

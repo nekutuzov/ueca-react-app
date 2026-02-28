@@ -1,6 +1,6 @@
 import * as UECA from "ueca-react";
 import { Typography } from "@mui/material";
-import { Col, Row, UIBaseModel, UIBaseParams, UIBaseStruct, useUIBase, IconButtonModel, useIconButton } from "@components";
+import { Col, Row, UIBaseModel, UIBaseParams, UIBaseStruct, useUIBase, IconButtonModel, useIconButton, NavLinkModel, useNavLink } from "@components";
 import { AppMenuModel, useAppMenu } from "@core";
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
@@ -14,6 +14,7 @@ type AppSideBarStruct = UIBaseStruct<{
     children: {
         menu: AppMenuModel;
         toggleButton: IconButtonModel;
+        uecaLink: NavLinkModel;
     };
 
     methods: {
@@ -47,6 +48,14 @@ function useAppSideBar(params?: AppSideBarParams): AppSideBarModel {
                 iconView: () => model.collapsed ? <MenuIcon /> : <MenuOpenIcon />,
                 size: "small",
                 onClick: () => model.toggleCollapse()
+            }),
+
+            uecaLink: useNavLink({
+                route: { path: "https://ueca-react.carrd.co/", params: undefined },
+                title: "UECA React Framework",
+                underline: "none",
+                newTab: true,
+                linkView: () => <img src={uecaLogo} alt="UECA" style={{ width: 24, height: 24 }} />
             })
         },
 
@@ -75,7 +84,7 @@ function useAppSideBar(params?: AppSideBarParams): AppSideBarModel {
             <Col id={model.htmlId()} width={model.collapsed ? 60 : 200}>
                 <Row render={!model.collapsed} horizontalAlign={"spaceBetween"} verticalAlign={"center"} padding={{ leftRight: "small", top: "tiny" }}>
                     <Row spacing="small" verticalAlign={"center"}>
-                        <img src={uecaLogo} alt="UECA" style={{ width: 24, height: 24 }} />
+                        <model.uecaLink.View />
                         <Typography variant="subtitle1" fontWeight="bold">
                             Tutorial
                         </Typography>
