@@ -1,0 +1,73 @@
+import * as UECA from "ueca-react";
+import { UIBaseModel, UIBaseParams, UIBaseStruct, useUIBase } from "@components";
+import {
+    AppBrowsingHistoryModel,
+    useAppBrowsingHistory,
+    AppUIModel,
+    useAppUI,
+    AppSecurityModel,
+    useAppSecurity,
+    AppLocalStorageModel,
+    useAppLocalStorage
+} from "@core";
+import { ApiServiceModel, useApiService } from "@api";
+
+type ApplicationStruct = UIBaseStruct<{
+    props: {
+        applicationName: string;
+        appVersion: string;
+    },
+
+    children: {
+        browsingHistory: AppBrowsingHistoryModel;
+        security: AppSecurityModel;
+        localStorage: AppLocalStorageModel;
+        ui: AppUIModel;
+        apiService: ApiServiceModel;
+    }
+}>;
+
+type ApplicationParams = UIBaseParams<ApplicationStruct>;
+type ApplicationModel = UIBaseModel<ApplicationStruct>;
+
+function useApplication(params?: ApplicationParams): ApplicationModel {
+    const struct: ApplicationStruct = {
+        props: {
+            id: useApplication.name,
+            applicationName: undefined,
+            appVersion: undefined
+        },
+
+        children: {
+            browsingHistory: useAppBrowsingHistory(),
+
+            security: useAppSecurity(),
+
+            localStorage: useAppLocalStorage(),
+
+            ui: useAppUI({
+                authorizedMode: () => model.security.isAuthorized()
+            }),
+
+            apiService: useApiService()
+        },
+
+        messages: {
+            "App.GetInfo": async () => {
+                return {
+                    appName: model.applicationName,
+                    appVersion: model.appVersion
+                }
+            }
+        },
+
+        View: () => <model.ui.View />
+    };
+
+    const model = useUIBase(struct, params);
+    return model;
+}
+
+const Application = UECA.getFC(useApplication);
+
+export { ApplicationModel, useApplication, Application };

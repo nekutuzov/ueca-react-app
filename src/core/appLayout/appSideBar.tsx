@@ -1,0 +1,93 @@
+import * as UECA from "ueca-react";
+import { Col, Row, UIBaseModel, UIBaseParams, UIBaseStruct, useUIBase, IconButtonModel, useIconButton, NavLinkModel, useNavLink } from "@components";
+import { AppMenuModel, useAppMenu, MenuIcon, MenuCollapseIcon } from "@core";
+
+type AppSideBarStruct = UIBaseStruct<{
+    props: {
+        collapsed: boolean;
+    };
+
+    children: {
+        menu: AppMenuModel;
+        toggleButton: IconButtonModel;
+        logoLink: NavLinkModel;
+    };
+
+    methods: {
+        toggleCollapse: () => void;
+    };
+}>;
+
+type AppSideBarParams = UIBaseParams<AppSideBarStruct>;
+type AppSideBarModel = UIBaseModel<AppSideBarStruct>;
+
+function useAppSideBar(params?: AppSideBarParams): AppSideBarModel {
+    const struct: AppSideBarStruct = {
+        props: {
+            id: useAppSideBar.name,
+            collapsed: false
+        },
+
+        children: {
+            menu: useAppMenu({
+                iconsOnly: () => model.collapsed
+            }),
+
+            toggleButton: useIconButton({
+                iconView: () => model.collapsed ? <MenuIcon /> : <MenuCollapseIcon />,
+                size: "small",
+                onClick: () => model.toggleCollapse()
+            }),
+
+            logoLink: useNavLink({
+                route: { path: "/" },
+                linkView: () => <img src="logo.png" alt="App Logo" style={{ height: "32px", width: "32px" }} />
+            }),
+        },
+
+        methods: {
+            toggleCollapse: () => {
+                model.collapsed = !model.collapsed;
+            }
+        },
+
+        View: () =>
+            <Col id={model.htmlId()}
+                width={model.collapsed ? 60 : 200}
+                minWidth={model.collapsed ? 60 : 200}
+                maxWidth={model.collapsed ? 60 : 200}
+                fill
+                sx={{
+                    transition: "width 0.3s ease-in-out",
+                }}
+            >
+                {/* Header Section */}
+                <Col>
+                    <Row render={!model.collapsed} verticalAlign={"center"} spacing={"small"} padding={{ leftRight: "small", topBottom: "tiny" }}>
+                        <model.toggleButton.View />
+                        <model.logoLink.View />
+                        <span style={{ fontSize: "16px", fontWeight: "bold", color: "#1976d2" }}>
+                            My App
+                        </span>
+                    </Row>
+                    <Row render={model.collapsed} horizontalAlign={"center"} verticalAlign={"center"} padding={{ topBottom: "tiny" }}>
+                        <model.toggleButton.View />
+                    </Row>
+                    {/* Divider */}
+                    <div style={{ height: "1px", backgroundColor: "#e0e0e0", margin: "0 8px" }} />
+                </Col>
+
+                {/* Menu Section - fills remaining space */}
+                <Col fill overflow="hidden">
+                    <model.menu.View />
+                </Col>
+            </Col>
+    }
+
+    const model = useUIBase(struct, params);
+    return model;
+}
+
+const AppSideBar = UECA.getFC(useAppSideBar);
+
+export { AppSideBarParams, AppSideBarModel, useAppSideBar, AppSideBar }
