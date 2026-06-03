@@ -79,6 +79,8 @@ function useBase<T extends BasePartialStruct>(extStruct: T, params?: BaseParams<
             // Misc
             runWithErrorDisplay: async (p) => await _runWithErrorDisplay(p),
             runWithBusyDisplay: async (action) => await _runWithBusyDisplay(action),
+            selectFiles: async (fileMask, multiselect) => await model.bus.unicast("App.SelectFiles", { fileMask, multiselect }),
+            copyToClipboard: async (content) => await _copyToClipboard(content),
         }
     }
 
@@ -100,6 +102,38 @@ function useBase<T extends BasePartialStruct>(extStruct: T, params?: BaseParams<
             return await action();
         } finally {
             await model.setAppBusy(false);
+        }
+    }
+
+    async function _copyToClipboard(content: string) {
+        if (!content) {
+            return;
+        }
+
+        try {
+            if (navigator.clipboard?.writeText) {
+                await navigator.clipboard.writeText(content);
+            } else {
+                const textArea = document.createElement("textarea");
+                textArea.value = content;
+                textArea.style.position = "fixed";
+                textArea.style.left = "-9999px";
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                const successful = document.execCommand("copy");
+                document.body.removeChild(textArea);
+
+                if (!successful) {
+                    throw new Error("Clipboard copy failed");
+                }
+            }
+
+            await model.alertInformation("Information was copied to clipboard");
+        } catch (error) {
+            await model.alertError(
+                `Copy to clipboard failed: ${error instanceof Error ? error.message : String(error)}`
+            );
         }
     }
 }
